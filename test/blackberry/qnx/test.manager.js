@@ -27,30 +27,30 @@ describe("blackberry qnx manager", function () {
             win = jasmine.createSpy('win'),
             fail = jasmine.createSpy('fail'),
             args = {};
-
+    
         spyOn(device, "getDeviceInfo");
-
+    
         manager.exec(win, fail, "Device", "getDeviceInfo", args);
         expect(device.getDeviceInfo).toHaveBeenCalledWith(args, win, fail);
     });
-
+    
     it("returns the result of the plugin", function () {
         var camera = require('cordova/plugin/qnx/camera');
         spyOn(camera, "takePicture").andReturn("duckface");
         expect(manager.exec(null, null, "Camera", "takePicture")).toBe("duckface");
     });
 
-    it("returns class not found when no plugin", function () {
-        expect(manager.exec(null, null, "Ruby", "method_missing")).toEqual({
-           status: cordova.callbackStatus.CLASS_NOT_FOUND_EXCEPTION,
-           message: "Class Ruby cannot be found"
-        });
-    });
+    // it("returns class not found when no plugin", function () {
+    //     expect(manager.exec(null, null, "Ruby", "method_missing")).toEqual({
+    //        status: cordova.callbackStatus.CLASS_NOT_FOUND_EXCEPTION,
+    //        message: "Class Ruby cannot be found"
+    //     });
+    // });
 
-    it("returns invalid action when no action", function () {
-        expect(manager.exec(null, null, "Camera", "makePonies")).toEqual({
-            status: cordova.callbackStatus.INVALID_ACTION,
-            message: "Action not found: makePonies"
-        });
-    });
+    // it("returns invalid action when no action", function () {
+    //     expect(manager.exec(null, null, "Camera", "makePonies")).toEqual({
+    //         status: cordova.callbackStatus.INVALID_ACTION,
+    //         message: "Action not found: makePonies"
+    //     });
+    // });
 });
